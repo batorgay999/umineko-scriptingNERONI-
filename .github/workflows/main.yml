@@ -1,9 +1,14 @@
 name: CI
-on:
-  push:
-    branches:
-      - master
-  pull_request:
+
+on: 
+  workflow_dispatch:
+    inputs:
+      desc:
+        type: string
+        description: "Description for new release"
+        required: true
+        default: 'Beschreibung nicht definiert.'
+
 jobs:
   build:
     name: Build scripts
@@ -13,7 +18,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-
+          
       - name: Compile
         run: |
           BUILD=$(($(git rev-list --count --first-parent HEAD)+3500))
