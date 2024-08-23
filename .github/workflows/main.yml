@@ -1,14 +1,9 @@
 name: CI
-
-on: 
-  workflow_dispatch:
-    inputs:
-      desc:
-        type: string
-        description: "Description for new release"
-        required: true
-        default: 'Beschreibung nicht definiert.'
-
+on:
+  push:
+    branches:
+      - master
+  pull_request:
 jobs:
   build:
     name: Build scripts
@@ -18,7 +13,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          
+
       - name: Compile
         run: |
           BUILD=$(($(git rev-list --count --first-parent HEAD)+3500))
@@ -187,15 +182,3 @@ jobs:
           asset_path: ./ciout/umineko-cn-scripts_r${{ env.BUILD }}_dev.zip
           asset_name: umineko-cn-scripts_r${{ env.BUILD }}_dev.zip
           asset_content_type: application/zip
-  2 changes: 1 addition & 1 deletion2  
-script/umi_hdr.txt
-Original file line number	Diff line number	Diff line change
-@@ -2928,7 +2928,7 @@ preset_define 32,1,40,#FFFFFF,0,0,0,1,8,#000000,0,0,0,#000000,2,20,1590 ;Menu mu
-
-gosub *redefine_text_presets
-
-enable_gradients 1
-enable_gradients 0
-
-;System commands
-pretextgosub *pretext
